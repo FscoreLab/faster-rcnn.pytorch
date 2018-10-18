@@ -159,17 +159,13 @@ if __name__ == '__main__':
   # -- Note: Use validation set and disable the flipped to enable faster loading.
 
   input_dir = args.load_dir + "/" + args.net + "/" + args.dataset
+  print(input_dir)
   if not os.path.exists(input_dir):
     raise Exception('There is no input directory for loading network from ' + input_dir)
   load_name = os.path.join(input_dir,
     'faster_rcnn_{}_{}_{}.pth'.format(args.checksession, args.checkepoch, args.checkpoint))
 
-  pascal_classes = np.asarray(['__background__',
-                       'aeroplane', 'bicycle', 'bird', 'boat',
-                       'bottle', 'bus', 'car', 'cat', 'chair',
-                       'cow', 'diningtable', 'dog', 'horse',
-                       'motorbike', 'person', 'pottedplant',
-                       'sheep', 'sofa', 'train', 'tvmonitor'])
+  pascal_classes = np.asarray(['__background__','BENIGN','MALIGNANT'])
 
   # initilize the network here.
   if args.net == 'vgg16':
