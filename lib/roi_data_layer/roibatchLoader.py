@@ -20,7 +20,7 @@ import time
 import pdb
 
 class roibatchLoader(data.Dataset):
-  def __init__(self, roidb, ratio_list, ratio_index, batch_size, num_classes, training=True, normalize=None):
+  def __init__(self, roidb, ratio_list, ratio_index, batch_size, num_classes, training=True, remove_negative=True, normalize=None):
     self._roidb = roidb
     self._num_classes = num_classes
     # we make the height of image consistent to trim_height, trim_width
@@ -28,6 +28,7 @@ class roibatchLoader(data.Dataset):
     self.trim_width = cfg.TRAIN.TRIM_WIDTH
     self.max_num_box = cfg.MAX_NUM_GT_BOXES
     self.training = training
+    self.remove_negative = remove_negative
     self.normalize = normalize
     self.ratio_list = ratio_list
     self.ratio_index = ratio_index
@@ -93,7 +94,7 @@ class roibatchLoader(data.Dataset):
                 max_y = int(torch.max(gt_boxes[:,3]))
                 trim_size = int(np.floor(data_width / ratio))
                 if trim_size > data_height:
-                    trim_size = data_height                
+                    trim_size = data_height
                 box_region = max_y - min_y + 1
                 if min_y == 0:
                     y_s = 0
@@ -129,7 +130,7 @@ class roibatchLoader(data.Dataset):
                 max_x = int(torch.max(gt_boxes[:,2]))
                 trim_size = int(np.ceil(data_height * ratio))
                 if trim_size > data_width:
-                    trim_size = data_width                
+                    trim_size = data_width
                 box_region = max_x - min_x + 1
                 if min_x == 0:
                     x_s = 0
