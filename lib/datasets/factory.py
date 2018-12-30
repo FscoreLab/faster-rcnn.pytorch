@@ -12,6 +12,7 @@ import numpy as np
 
 from datasets.coco import coco
 from datasets.imagenet import imagenet
+from datasets.medicine import medicine
 from datasets.pascal_voc import pascal_voc
 from datasets.passports import passports
 from datasets.vg import vg
@@ -20,7 +21,11 @@ __sets = {}
 
 for split in ['train', 'val', 'test']:
     name = f'passports_{split}'
-    __sets[name] = (lambda split=split: passports(name))
+    __sets[name] = (lambda split=split: passports(split))
+
+for split in ['train', 'val', 'test']:
+    name = f'medicine_{split}'
+    __sets[name] = (lambda split=split: medicine(split))
 
 # Set up voc_<year>_<split>
 for year in ['2007', '2012']:
