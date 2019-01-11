@@ -43,7 +43,7 @@ class passports(imdb):
         imdb.__init__(self, 'passports_' + year + '_' + image_set)
         self._year = year
         self._image_set = image_set
-        self._devkit_path = '/media/data/FscoreLab/passports/data'
+        self._devkit_path = '/root/PTR/data'
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
         self._classes = ('__background__', 'placeofissue', 'dateofissue',
                          'issuecode', 'number', 'photo', 'name', 'sex',
