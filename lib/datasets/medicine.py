@@ -43,7 +43,7 @@ class medicine(imdb):
         imdb.__init__(self, 'medicine_' + year + '_' + image_set)
         self._year = year
         self._image_set = image_set
-        self._devkit_path = os.path.realpath('/../../../medicine/data')
+        self._devkit_path = os.path.realpath('../../../medicine/data')
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
         self._classes = ('__background__', 'benigncalcinates',
                          'malignantcalcinates', 'volumetricformation', 'fake')
