@@ -45,8 +45,8 @@ class medicine(imdb):
         self._image_set = image_set
         self._devkit_path = '/media/data/FscoreLab/medicine/data'
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
-        self._classes = ('__background__', 'calcification_benign',
-                         'calcification_malignant', 'volumetric')
+        self._classes = ('__background__', 'benigncalcinates',
+                         'malignantcalcinates', 'volumetricformation', 'fake')
         self._class_to_ind = dict(zip(self.classes, xrange(self.num_classes)))
         self._image_ext = '.png'
         self._image_index = self._load_image_set_index()

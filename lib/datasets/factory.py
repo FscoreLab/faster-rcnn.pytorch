@@ -19,7 +19,7 @@ from datasets.vg import vg
 
 __sets = {}
 
-for split in ['train', 'val', 'test']:
+for split in ['train', 'val', 'test', 'train_overfit']:
     name = f'passports_{split}'
     __sets[name] = (lambda split=split: passports(split))
 
