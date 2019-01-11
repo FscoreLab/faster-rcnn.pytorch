@@ -18,7 +18,7 @@ class _RPN(nn.Module):
     """ region proposal network """
     def __init__(self, din):
         super(_RPN, self).__init__()
-        
+
         self.din = din  # get depth of input feature map, e.g., 512
         self.anchor_scales = cfg.ANCHOR_SCALES
         self.anchor_ratios = cfg.ANCHOR_RATIOS
@@ -55,7 +55,7 @@ class _RPN(nn.Module):
         )
         return x
 
-    def forward(self, base_feat, im_info, gt_boxes, num_boxes):
+    def forward(self, base_feat, im_info, gt_boxes, num_boxes, ignore_class=-100):
 
         batch_size = base_feat.size(0)
 
@@ -94,7 +94,7 @@ class _RPN(nn.Module):
             rpn_cls_score = torch.index_select(rpn_cls_score.view(-1,2), 0, rpn_keep)
             rpn_label = torch.index_select(rpn_label.view(-1), 0, rpn_keep.data)
             rpn_label = Variable(rpn_label.long())
-            self.rpn_loss_cls = F.cross_entropy(rpn_cls_score, rpn_label)
+            self.rpn_loss_cls = F.cross_entropy(rpn_cls_score, rpn_label, ignore_index=ignore_class)
             fg_cnt = torch.sum(rpn_label.data.ne(0))
 
             rpn_bbox_targets, rpn_bbox_inside_weights, rpn_bbox_outside_weights = rpn_data[1:]
