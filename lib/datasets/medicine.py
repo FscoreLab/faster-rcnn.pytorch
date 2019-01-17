@@ -44,6 +44,8 @@ class medicine(imdb):
         self._year = year
         self._image_set = image_set
         self._devkit_path = '/root/breastcancer/data'
+        if not os.path.exists(self._devkit_path):
+            self._devkit_path = '/media/data/FscoreLab/medicine/data'
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
         self._classes = ('__background__', 'benigncalcinates',
                          'malignantcalcinates', 'volumetricformation')
