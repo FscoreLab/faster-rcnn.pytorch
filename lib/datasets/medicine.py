@@ -37,6 +37,8 @@ except NameError:
 
 # <<<< obsolete
 
+THRESHOLD = 0.23
+
 
 class medicine(imdb):
     def __init__(self, image_set, year='', devkit_path=None):
@@ -237,7 +239,6 @@ class medicine(imdb):
             diffc = obj.find('difficult')
             difficult = 0 if diffc == None else int(diffc.text)
             ishards[ix] = difficult
-
             cls = self._class_to_ind[obj.find('name').text.lower().strip()]
             boxes[ix, :] = [x1, y1, x2, y2]
             gt_classes[ix] = cls
@@ -375,7 +376,7 @@ class medicine(imdb):
             filename = self._get_voc_results_file_template().format(cls)
             cachedir = os.path.join(self._devkit_path, 'annotations_cache')
             rec, prec, ap = voc_eval(
-                filename, annopath, imagesetfile, cls, cachedir, ovthresh=0.5,
+                filename, annopath, imagesetfile, cls, cachedir, ovthresh=THRESHOLD,
                 use_07_metric=False)
             aps += [ap]
             print('AP for {} = {:.4f}'.format(cls, ap))
