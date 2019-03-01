@@ -48,6 +48,8 @@ class medicine(imdb):
         self._devkit_path = '/root/breastcancer/data'
         if not os.path.exists(self._devkit_path):
             self._devkit_path = '/media/data/FscoreLab/medicine/data'
+        if not os.path.exists(self._devkit_path):
+            self._devkit_path = '/scratch/en919/medicine'
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
         self._classes = ('__background__', 'benigncalcinates',
                          'malignantcalcinates', 'volumetricformation')
