@@ -372,6 +372,7 @@ class medicine(imdb):
             'ImageSets',
             self._image_set + '.txt')
         aps = []
+        aps_dict = {}
         for i, cls in enumerate(self._classes):
             if cls == '__background__':
                 continue
@@ -381,11 +382,12 @@ class medicine(imdb):
                 filename, annopath, imagesetfile, cls, cachedir, ovthresh=THRESHOLD,
                 use_07_metric=False)
             aps += [ap]
+            aps_dict[cls] = ap
             print('AP for {} = {:.4f}'.format(cls, ap))
 
         map = np.mean(aps)
 
-        return map
+        return map, aps_dict
 
     def competition_mode(self, on):
         if on:
@@ -397,7 +399,7 @@ class medicine(imdb):
 
 
 if __name__ == '__main__':
-    d = passports('passports')
+    d = medicine('medicine')
     res = d.roidb
     from IPython import embed
 
