@@ -361,7 +361,7 @@ class medicine(imdb):
                 filename = self._get_voc_results_file_template().format(cls)
                 os.remove(filename)
 
-    def calculate_map(self, all_boxes):
+    def calculate_map(self, all_boxes, ovthresh=THRESHOLD):
         self._write_voc_results_file(all_boxes)
         annopath = os.path.join(
             self._data_path,
@@ -379,7 +379,7 @@ class medicine(imdb):
             filename = self._get_voc_results_file_template().format(cls)
             cachedir = os.path.join(self._devkit_path, 'annotations_cache')
             rec, prec, ap = voc_eval(
-                filename, annopath, imagesetfile, cls, cachedir, ovthresh=THRESHOLD,
+                filename, annopath, imagesetfile, cls, cachedir, ovthresh=ovthresh,
                 use_07_metric=False)
             aps += [ap]
             aps_dict[cls] = ap
