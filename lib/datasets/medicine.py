@@ -37,8 +37,6 @@ except NameError:
 
 # <<<< obsolete
 
-THRESHOLD = 0.23
-
 
 class medicine(imdb):
     def __init__(self, image_set, year='', devkit_path=None):
@@ -361,7 +359,7 @@ class medicine(imdb):
                 filename = self._get_voc_results_file_template().format(cls)
                 os.remove(filename)
 
-    def calculate_map(self, all_boxes, ovthresh=THRESHOLD):
+    def calculate_map(self, all_boxes):
         self._write_voc_results_file(all_boxes)
         annopath = os.path.join(
             self._data_path,
@@ -379,7 +377,7 @@ class medicine(imdb):
             filename = self._get_voc_results_file_template().format(cls)
             cachedir = os.path.join(self._devkit_path, 'annotations_cache')
             rec, prec, ap = voc_eval(
-                filename, annopath, imagesetfile, cls, cachedir, ovthresh=ovthresh,
+                filename, annopath, imagesetfile, cls, cachedir, ovthresh=0.5,
                 use_07_metric=False)
             aps += [ap]
             aps_dict[cls] = ap
