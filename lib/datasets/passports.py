@@ -46,7 +46,7 @@ class passports(imdb):
         self._devkit_path = '/root/PTR/data'
         if not os.path.exists(self._devkit_path):
             self._devkit_path = '/media/data/FscoreLab/passports/data'
-        self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
+        self._data_path = os.path.join(self._devkit_path, 'pascal_voc_new')
         self._classes = ('__background__', 'placeofissue', 'dateofissue',
                          'issuecode', 'number', 'photo', 'name', 'sex',
                          'dateofbirth', 'address', 'mrz', 'document')
