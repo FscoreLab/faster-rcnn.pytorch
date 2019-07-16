@@ -31,21 +31,24 @@ from .voc_eval import voc_eval
 
 
 try:
-    xrange          # Python 2
+    xrange  # Python 2
 except NameError:
     xrange = range  # Python 3
+
 
 # <<<< obsolete
 
 
 class medicine(imdb):
-    def __init__(self, image_set, year='', devkit_path=None):
+    def __init__(self, image_set, year='', devkit_path=None, use_cache=False):
         imdb.__init__(self, 'medicine_' + year + '_' + image_set)
         self._year = year
         self._image_set = image_set
-        self._devkit_path = '/root/breastcancer/data'
-        if not os.path.exists(self._devkit_path):
+        self._devkit_path = devkit_path
+        self.use_cache = use_cache
+        if devkit_path is None or not os.path.exists(self._devkit_path):
             self._devkit_path = os.getenv('FASTER_RCNN_DATA_PATH')
+        print(os.getenv('FASTER_RCNN_DATA_PATH'))
         self._data_path = os.path.join(self._devkit_path, 'pascal_voc')
         self._classes = ('__background__', 'benigncalcinates',
                          'malignantcalcinates', 'volumetricformation')
@@ -120,7 +123,7 @@ class medicine(imdb):
         This function loads/saves from/to a cache file to speed up future calls.
         """
         cache_file = os.path.join(self.cache_path, self.name + '_gt_roidb.pkl')
-        if os.path.exists(cache_file):
+        if os.path.exists(cache_file) and self.use_cache:
             with open(cache_file, 'rb') as fid:
                 roidb = pickle.load(fid)
             print('{} gt roidb loaded from {}'.format(self.name, cache_file))
@@ -308,7 +311,7 @@ class medicine(imdb):
             if cls == '__background__':
                 continue
             filename = self._get_voc_results_file_template().format(cls)
-            rec, prec, ap = voc_eval(
+            rec, prec, ap, npos = voc_eval(
                 filename, annopath, imagesetfile, cls, cachedir, ovthresh=0.5,
                 use_07_metric=use_07_metric)
             aps += [ap]
@@ -369,21 +372,23 @@ class medicine(imdb):
             self._image_set + '.txt')
         aps = []
         aps_dict = {}
+        count_dict = {}
         for i, cls in enumerate(self._classes):
             if cls == '__background__':
                 continue
             filename = self._get_voc_results_file_template().format(cls)
             cachedir = os.path.join(self._devkit_path, 'annotations_cache')
-            rec, prec, ap = voc_eval(
+            rec, prec, ap, npos = voc_eval(
                 filename, annopath, imagesetfile, cls, cachedir, ovthresh=0.5,
                 use_07_metric=False)
             aps += [ap]
             aps_dict[cls] = ap
+            count_dict[cls] = npos
             print('AP for {} = {:.4f}'.format(cls, ap))
 
         map = np.mean(aps)
 
-        return map, aps_dict
+        return map, aps_dict, count_dict
 
     def competition_mode(self, on):
         if on:
