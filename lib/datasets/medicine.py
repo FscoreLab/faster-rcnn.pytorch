@@ -372,7 +372,8 @@ class medicine(imdb):
             self._image_set + '.txt')
         aps = []
         aps_dict = {}
-        count_dict = {}
+        rec_dict = {}
+        prec_dict = {}
         for i, cls in enumerate(self._classes):
             if cls == '__background__':
                 continue
@@ -383,12 +384,13 @@ class medicine(imdb):
                 use_07_metric=False)
             aps += [ap]
             aps_dict[cls] = ap
-            count_dict[cls] = npos
+            rec_dict[cls] = np.mean(rec)
+            prec_dict[cls] = np.mean(prec)
             print('AP for {} = {:.4f}'.format(cls, ap))
 
         map = np.mean(aps)
 
-        return map, aps_dict, count_dict
+        return map, aps_dict, rec_dict, prec_dict
 
     def competition_mode(self, on):
         if on:
