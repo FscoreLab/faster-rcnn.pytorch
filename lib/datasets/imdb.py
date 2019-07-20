@@ -124,7 +124,6 @@ class imdb(object):
             #for iii in range(boxes.shape[0]):
             #    if boxes[iii, 0] > boxes[iii, 2]:
             #        boxes[iii, 0] = 0
-            print(boxes)
             assert (boxes[:, 2] >= boxes[:, 0]).all()
             entry = {'boxes': boxes,
                      'gt_overlaps': self.roidb[i]['gt_overlaps'],
