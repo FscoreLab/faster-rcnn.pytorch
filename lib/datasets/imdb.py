@@ -120,10 +120,8 @@ class imdb(object):
             print(boxes)
             oldx1 = boxes[:, 0].copy()
             oldx2 = boxes[:, 2].copy()
-            boxes[:, 0] = widths[i] - oldx2 - 1
-            boxes[:, 2] = widths[i] - oldx1 - 1
-            print(widths[i])
-            print(boxes)
+            boxes[:, 0] = widths[i] - oldx2
+            boxes[:, 2] = widths[i] - oldx1
             #for iii in range(boxes.shape[0]):
             #    if boxes[iii, 0] > boxes[iii, 2]:
             #        boxes[iii, 0] = 0
