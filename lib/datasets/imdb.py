@@ -122,7 +122,7 @@ class imdb(object):
             oldx2 = boxes[:, 2].copy()
             boxes[:, 0] = widths[i] - oldx2 - 1
             boxes[:, 2] = widths[i] - oldx1 - 1
-            print(widths)
+            print(widths[i])
             print(boxes)
             #for iii in range(boxes.shape[0]):
             #    if boxes[iii, 0] > boxes[iii, 2]:
