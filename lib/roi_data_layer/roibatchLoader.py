@@ -64,6 +64,7 @@ class roibatchLoader(data.Dataset):
     # here we set the anchor index to the last one
     # sample in this group
     minibatch_db = [self._roidb[index_ratio]]
+    print(self._roidb[index_ratio]['image'])
     blobs = get_minibatch(minibatch_db, self._num_classes)
     data = torch.from_numpy(blobs['data'])
     im_info = torch.from_numpy(blobs['im_info'])
