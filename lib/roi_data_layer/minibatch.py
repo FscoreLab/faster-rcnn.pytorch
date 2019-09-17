@@ -12,7 +12,7 @@ import pdb
 
 import numpy as np
 import numpy.random as npr
-from scipy.misc import imread
+from imageio import imread
 
 from model.utils.blob import im_list_to_blob, prep_im_for_blob
 from model.utils.config import cfg
